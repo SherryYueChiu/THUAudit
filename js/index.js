@@ -59,7 +59,6 @@ function showClass() {
 }
 
 function classFilter(day, time) {
-    console.warn("all classes", classPool.length)
     // 過濾掉不在當天的課
     classPool = classPool.filter(theClass => {
         let result = false;
@@ -79,31 +78,30 @@ function classFilter(day, time) {
                 result = true;
             }
         });
-        return (theClass.time.indexOf(weekDayWord[day]) != -1) || result;
+        return (theClass.time.indexOf(weekDayWord[day]) != -1) && result;
     });
-    console.warn("filter by area", classPool.length)
 
     // 截取每門課當天上哪幾節
-    // classPool = classPool.filter(theClass => {
-    //     let lBound = 0,
-    //         rBound = theClass.time.length - 1;
-    //     let foundDay = false;
-    //     theClass.time.forEach((_time, i) => {
-    //         if (!foundDay) {
-    //             if (_time == weekDayWord[day]) {
-    //                 lBound = i;
-    //                 foundDay = true;
-    //             }
-    //         } else {
-    //             if (_time.charCodeAt() > 1000)
-    //                 rBound = i - 1;
-    //         }
-    //     });
-    //     let ClassTimeOfToday = theClass.time.slice(lBound + 1, rBound + 1);
-    //     theClass.time = ClassTimeOfToday;
-    //     return ClassTimeOfToday.indexOf(time) != -1;
-    // });
-    console.warn("filter by time", classPool.length)
+    classPool = classPool.filter(theClass => {
+        if(theClass.time == "") return true;
+        let lBound = 0,
+            rBound = theClass.time.length - 1;
+        let foundDay = false;
+        theClass.time.forEach((_time, i) => {
+            if (!foundDay) {
+                if (_time == weekDayWord[day]) {
+                    lBound = i;
+                    foundDay = true;
+                }
+            } else {
+                if (_time.charCodeAt() > 1000)
+                    rBound = i - 1;
+            }
+        });
+        let ClassTimeOfToday = theClass.time.slice(lBound + 1, rBound + 1);
+        theClass.time = ClassTimeOfToday;
+        return ClassTimeOfToday.indexOf(time) != -1;
+    });
 
     // 用課程名稱首字排序
     classPool = classPool.sort(function (a, b) {
