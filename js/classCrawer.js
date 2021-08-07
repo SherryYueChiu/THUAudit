@@ -18,19 +18,20 @@ for (i = 0; i < classCnt; i++) {
     }
 
     //時間地點
-    let timerooms = $("[data-title=時間地點]").eq(i).html().trim().split(" ");
+    let timerooms = $("[data-title=時間地點]").eq(i).html().trim().split(/\s+/);
     timerooms.forEach(timeroom => {
         if (timeroom.indexOf("星期") != -1) {
-            let str = timeroom;
+            // 過濾掉"星期"
+            let str = timeroom.replace("星期", "");
             // 教室格式: [教室]
             let _croom = str.match(/\[(.+)\]/gi)?.[0];
             if (_croom) {
                 croom.push(_croom.substring(1, _croom.length - 1));
-                // 過濾掉教室和"星期"
-                str = str.replace("星期", "").replace(`[${croom}]`, "");
+                // 過濾掉教室
+                str = str.replace(_croom, "");
             }
             // 時間格式: 星期/節,節...
-            let _ctime = str.split(/[\/,]/gi, "");
+            let _ctime = str.split(/[,\/]/);
             if (_ctime) {
                 ctime.push(_ctime?.join('","'));
             }
