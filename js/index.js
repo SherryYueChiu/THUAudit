@@ -48,7 +48,7 @@ function showClass() {
         // 課程代號
         html += `
     <h6 class="classCode">
-        <a class="color2" href="https://course.thu.edu.tw/view/109/2/${_class.code}" target="_blank">
+        <a class="color2" href="https://course.thu.edu.tw/view/110/1/${_class.code}" target="_blank">
             ${_class.code}
         </a>
     </h6>
