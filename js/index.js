@@ -1,3 +1,5 @@
+
+/** @type {{code:string, name:string, room:string[], time:string[]}[]} */
 var classPool;
 var date = new Date();
 var weekDayWord = ["天", "一", "二", "三", "四", "五", "六"];
@@ -6,7 +8,9 @@ var textPool = {
 
 }
 
-// 顯示篩選後課程列表
+/**
+ * 顯示篩選後課程列表
+ */
 function showClass() {
     classPool.forEach(function (_class) {
         // 插入課程泡泡
@@ -58,8 +62,12 @@ function showClass() {
     });
 }
 
+/**
+ * 依星期和節數過濾掉課程
+ * @param {number} day 
+ * @param {number} time 
+ */
 function classFilter(day, time) {
-    // 過濾掉不在當天的課
     classPool = classPool.filter(theClass => {
         let result = false;
         theClass.room.forEach(_room => {
@@ -115,12 +123,10 @@ function classFilter(day, time) {
         return result ? 1 : -1;
     });
 
-    // 顯示篩選結果
     showClass();
 }
 
 $(function () {
-
     // 送出選擇
     $("#page1Submit").click(function () {
         $("#page1").fadeOut(200);
@@ -134,7 +140,7 @@ $(function () {
             classPool = $.parseJSON(json);
         });
 
-        // 取得今天星期幾
+        // 顯示今天星期幾
         $("#greetingMsg").html(textPool.greetingMsg.replace("#1 ", weekDayWord[date.getDay()]));
         $("#chooseDay").find(`option[value=${date.getDay()}]`).prop("selected", "selected");
     }
