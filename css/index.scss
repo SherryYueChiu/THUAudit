@@ -1,4 +1,4 @@
-$color1: #ef9a9a;
+$color1: #343a40;
 $color2: #ffccbc;
 $color3: #1a237e;
 $color4: #b2dfdb;
@@ -8,8 +8,8 @@ $color5: #e8f5e9;
     height: 0;
 }
 
-body {s
-    background-color: $color2;
+body {
+    background-color: #83919f;
 }
 
 html,
@@ -32,6 +32,18 @@ a:hover {
     overflow-y: auto;
 }
 
+#classList {
+    padding-bottom: 100px;
+}
+
+.classBlock {
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 .classCode {
     text-align: right;
     margin-top: -1.5em;
@@ -52,9 +64,14 @@ hr.style-one {
     opacity: 0.6;
 }
 
+.adArea {
+    background-color: #343a40;
+}
+
 #footer > span {
     font-size: medium;
     margin-left: -2em;
+    color: #343a40;
 }
 
 .floatingBtn {
@@ -82,6 +99,7 @@ hr.style-one {
     height: auto;
     opacity: 0.5;
     z-index: -1;
+    display: none;
 }
 
 #bgImg2 {
@@ -93,6 +111,7 @@ hr.style-one {
     height: auto;
     opacity: 0.5;
     z-index: -1;
+    display: none;
 }
 
 .bgColor1 {

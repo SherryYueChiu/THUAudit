@@ -18,7 +18,7 @@ function showClass() {
         let html = `
 <div class="tag bg-dark p-3 mt-3 mb-3 rounded-lg mx-auto shadow-lg w-75">
 	<span>
-        <h4 class="color4" style="overflow-x: auto;">
+        <h4 class="color4 classBlock">
             ${_class.name}
         </h4>
     </span>
