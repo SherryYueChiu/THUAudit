@@ -61,8 +61,9 @@ hr.style-one {
   opacity: 0.6;
 }
 
-.adArea {
+#adArea {
   background-color: #343a40;
+  color: aliceblue;
 }
 
 #footer > span {
@@ -80,6 +81,24 @@ hr.style-one {
   opacity: 0.9;
   background-color: #e8e9eb !important;
   color: #101412 !important;
+  font-weight: bolder !important;
+  border-radius: 50px;
+  text-align: center;
+  -webkit-box-shadow: 2px 2px 3px #999;
+          box-shadow: 2px 2px 3px #999;
+  z-index: 99;
+}
+
+.btn-reinit {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  top: 20px;
+  left: 20px;
+  opacity: 0.9;
+  background-color: #e8e9eb !important;
+  color: #101412 !important;
+  font-size: 2rem;
   font-weight: bolder !important;
   border-radius: 50px;
   text-align: center;

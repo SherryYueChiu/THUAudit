@@ -3,10 +3,12 @@
 var classPool;
 var date = new Date();
 var weekDayWord = ["天", "一", "二", "三", "四", "五", "六"];
-var textPool = {
-    greetingMsg: `<h3 class="color1">今天是星期#1 </h3><h5>來看看今天可以旁聽點什麼嘛？</h5>`
+var g_textPool = {
+    greetingMsg: `<h3 class="color1">今天是星期{weekday} </h3><h5>來看看今天可以旁聽點什麼嘛？</h5>`
 
 }
+var g_schoolYear = 109;
+var g_semester = 2;
 
 /**
  * 顯示篩選後課程列表
@@ -52,7 +54,7 @@ function showClass() {
         // 課程代號
         html += `
     <h6 class="classCode">
-        <a class="color2" href="https://course.thu.edu.tw/view/110/1/${_class.code}" target="_blank">
+        <a class="color2" href="https://course.thu.edu.tw/view/${g_schoolYear}/${g_semester}/${_class.code}" target="_blank">
             ${_class.code}
         </a>
     </h6>
@@ -91,7 +93,7 @@ function classFilter(day, time) {
 
     // 截取每門課當天上哪幾節
     classPool = classPool.filter(theClass => {
-        if(theClass.time == "") return true;
+        if (theClass.time == "") return true;
         let lBound = 0,
             rBound = theClass.time.length - 1;
         let foundDay = false;
@@ -141,7 +143,7 @@ $(function () {
         });
 
         // 顯示今天星期幾
-        $("#greetingMsg").html(textPool.greetingMsg.replace("#1 ", weekDayWord[date.getDay()]));
+        $("#greetingMsg").html(g_textPool.greetingMsg.replace("{weekday}", weekDayWord[date.getDay()]));
         $("#chooseDay").find(`option[value=${date.getDay()}]`).prop("selected", "selected");
     }
 
