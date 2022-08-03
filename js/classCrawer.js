@@ -9,15 +9,15 @@ for (i = 0; i < classCnt; i++) {
 
     ccode = $(".button_hilite").eq(i).html().trim(); //課碼
 
-    //課名
+    // 課名
     if ($("[data-title=課程名稱]").eq(i).html().indexOf("strike") == -1) {
         cname = $("[data-title=課程名稱]>a").eq(i).html().trim();
     } else {
-        //已停開
+        // 已停開
         continue;
     }
 
-    //時間地點
+    // 時間地點
     let timerooms = $("[data-title=時間地點]").eq(i).html().trim().split(/\s+/);
     timerooms.forEach(timeroom => {
         if (timeroom.indexOf("星期") != -1) {

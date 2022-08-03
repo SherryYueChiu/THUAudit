@@ -7,8 +7,8 @@ var g_textPool = {
     greetingMsg: `<h3 class="color1">今天是星期{weekday} </h3><h5>來看看今天可以旁聽點什麼嘛？</h5>`
 
 }
-var g_schoolYear = 109;
-var g_semester = 2;
+var g_schoolYear = 111;
+var g_semester = 1;
 
 /**
  * 顯示篩選後課程列表
