@@ -1,44 +1,50 @@
-var classCnt = $(".button_hilite").length;
-var json = "";
+
+const classBlock = document.querySelectorAll("#no-more-tables>tbody>tr");
+const classCnt = classBlock.length;
+let json = '';
 
 for (i = 0; i < classCnt; i++) {
-    var ccode = "",
-        cname = "",
+    let ccode = '',
+        cname = '',
         croom = [],
         ctime = [];
 
-    ccode = $(".button_hilite").eq(i).html().trim(); //課碼
+    // 選課代碼
+    ccode = classBlock[i].querySelector('[data-title=選課代碼]').textContent.trim();
 
-    // 課名
-    if ($("[data-title=課程名稱]").eq(i).html().indexOf("strike") == -1) {
-        cname = $("[data-title=課程名稱]>a").eq(i).html().trim();
-    } else {
-        // 已停開
-        continue;
+    // 課程名稱
+    if (classBlock[i].querySelector('[data-title=課程名稱]').innerHTML.includes("strike")) continue;
+    else {
+        cname = classBlock[i].querySelector('[data-title=課程名稱]').textContent.trim();
     }
 
-    // 時間地點
-    let timerooms = $("[data-title=時間地點]").eq(i).html().trim().split(/\s+/);
-    timerooms.forEach(timeroom => {
-        if (timeroom.indexOf("星期") != -1) {
-            // 過濾掉"星期"
-            let str = timeroom.replace("星期", "");
-            // 教室格式: [教室]
-            let _croom = str.match(/\[(.+)\]/gi)?.[0];
-            if (_croom) {
-                croom.push(_croom.substring(1, _croom.length - 1));
-                // 過濾掉教室
-                str = str.replace(_croom, "");
-            }
-            // 時間格式: 星期/節,節...
-            let _ctime = str.split(/[,\/]/);
-            if (_ctime) {
-                ctime.push(_ctime?.join('","'));
-            }
-        } else {
-            //無公佈時間地點
-        }
+    // 地點
+    let room = classBlock[i].querySelector("[data-title=時間地點]").textContent
+        .replace('無資料', '')
+        .trim()
+        .match(/\[([^\[\]]*)\]/g);
+    if (!!room) {
+        // 去除[ ]
+        croom = room.map(str => str.slice(1, -1));
+    } else {
+        console.warn(`${ccode}地點格式異常 ${room}`);
+    }
+
+    // 時間
+    let timeRaw = classBlock[i].querySelector("[data-title=時間地點]").textContent
+    .replace('無資料', '')
+    .trim();
+    // 從原始資料去除地點資訊
+    room?.forEach(r => {
+        timeRaw = timeRaw.replace(r, '');
     });
+    timeRaw = timeRaw.replace('星期', '');
+    ctime = timeRaw.split(/[\s,\/]/);
+
+    if (!ctime) {
+        console.warn('時間格式異常', time);
+    }
+    // 時間目標格式： ["三", "6", "7", "五", "6", "7"]
 
     json += `{
           "code": "${ccode || ''}",
