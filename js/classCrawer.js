@@ -38,7 +38,7 @@ for (i = 0; i < classCnt; i++) {
     room?.forEach(r => {
         timeRaw = timeRaw.replace(r, '');
     });
-    timeRaw = timeRaw.replace('星期', '');
+    timeRaw = timeRaw.replaceAll('星期', '');
     ctime = timeRaw.split(/[\s,\/]/);
 
     if (!ctime) {

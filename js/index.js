@@ -8,7 +8,7 @@ var g_textPool = {
 
 }
 var g_schoolYear = 111;
-var g_semester = 1;
+var g_semester = 2;
 
 /**
  * 顯示篩選後課程列表
@@ -119,7 +119,7 @@ function classFilter(day, time) {
         let AMinusB = a.name.charCodeAt() - b.name.charCodeAt();
         // 中文字優先在前
         if (Math.abs(AMinusB) > 512)
-            result |= AMinusB < 0 ? true : false; //中文字對上英文字
+            result |= AMinusB < 0 ? true : false; // 中文字對上英文字
         else
             result |= AMinusB > 0 ? true : false;
         return result ? 1 : -1;
@@ -138,9 +138,10 @@ $(function () {
 
     function init() {
         // 讀取所有課程
-        $.get("./js/allClass.js", function (json) {
-            classPool = $.parseJSON(json);
-        });
+        // $.get("./js/allClass.js", function (json) {
+        //     classPool = $.parseJSON(json);
+        // });
+        classPool = rawData;
 
         // 顯示今天星期幾
         $("#greetingMsg").html(g_textPool.greetingMsg.replace("{weekday}", weekDayWord[date.getDay()]));
