@@ -1,0 +1,6 @@
+{
+  "name": "thuaudit",
+  "scripts": {
+    "sw": "cd ./build/web-mobile && sw-precache --config=sw-precache-config.js"
+  }
+}
