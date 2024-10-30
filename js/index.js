@@ -7,8 +7,8 @@ var g_textPool = {
     greetingMsg: `<h3 class="color1">今天是星期{weekday} </h3><h5>來看看今天可以旁聽點什麼嘛？</h5>`
 
 }
-var g_schoolYear = 111;
-var g_semester = 2;
+var g_schoolYear = 113;
+var g_semester = 1;
 
 /**
  * 顯示篩選後課程列表
@@ -72,9 +72,10 @@ function showClass() {
 function classFilter(day, time) {
     classPool = classPool.filter(theClass => {
         let result = false;
-        theClass.room.forEach(_room => {
+        theClass?.room?.forEach(_room => {
             // 辨識二校教學區
-            let isAtSecondArea = _room.search(/^(FA|M|MU|PG)\d+$/) != -1;
+            // TODO: 教室校區辨別需要改進
+            let isAtSecondArea = _room.search(/^(FA|M|MU|PG|二校)\d+$/) != -1;
             if ($("#chooseAceptRegion").val() == "2" && isAtSecondArea) {
                 result = true;
             }
@@ -90,10 +91,10 @@ function classFilter(day, time) {
         });
         return (theClass.time.indexOf(weekDayWord[day]) != -1) && result;
     });
-
+console.warn(classPool)
     // 截取每門課當天上哪幾節
     classPool = classPool.filter(theClass => {
-        if (theClass.time == "") return true;
+        if (!theClass.time) return true;
         let lBound = 0,
             rBound = theClass.time.length - 1;
         let foundDay = false;
