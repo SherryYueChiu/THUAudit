@@ -70,29 +70,35 @@ function showClass() {
  * @param {number} time 
  */
 function classFilter(day, time) {
+    // 以搜尋指定的校區過濾課程
     classPool = classPool.filter(theClass => {
         let result = false;
         theClass?.room?.forEach(_room => {
-            // 辨識二校教學區
-            // TODO: 教室校區辨別需要改進
-            let isAtSecondArea = _room.search(/^(FA|M|MU|PG|二校)\d+$/) != -1;
-            if ($("#chooseAceptRegion").val() == "2" && isAtSecondArea) {
+            const offCampus = _room.search(/^(中研院|遠距課程|梅|寒)\d+$/) != -1;
+            const atSecondCampus = _room.search(/^(FA|ICE|M|MU|PG|二校|職訓中心|馬馬教室)\d+$/) != -1;
+            const atMainCampus = !atSecondCampus && !offCampus;
+            // 第二校區上課
+            if ($("#chooseAceptRegion").val() == "2" && atSecondCampus) {
                 result = true;
             }
-            if ($("#chooseAceptRegion").val() == "1" && !isAtSecondArea) {
+            // 第一校區上課
+            else if ($("#chooseAceptRegion").val() == "1" && atMainCampus) {
                 result = true;
             }
-            if ($("#chooseAceptRegion").val() == "0") {
+            // 搜尋不限校區
+            else if ($("#chooseAceptRegion").val() == "0") {
                 result = true;
             }
-            if (_room == "") {
+            // 該課程沒有明訂教室
+            else if (_room == "") {
                 result = true;
             }
         });
         return (theClass.time.indexOf(weekDayWord[day]) != -1) && result;
     });
-console.warn(classPool)
-    // 截取每門課當天上哪幾節
+    // console.log(classPool)
+
+    // 以搜尋指定的星期和節數過濾課程
     classPool = classPool.filter(theClass => {
         if (!theClass.time) return true;
         let lBound = 0,
@@ -138,12 +144,7 @@ $(function () {
     });
 
     function init() {
-        // 讀取所有課程
-        // $.get("./js/allClass.js", function (json) {
-        //     classPool = $.parseJSON(json);
-        // });
         classPool = rawData;
-
         // 顯示今天星期幾
         $("#greetingMsg").html(g_textPool.greetingMsg.replace("{weekday}", weekDayWord[date.getDay()]));
         $("#chooseDay").find(`option[value=${date.getDay()}]`).prop("selected", "selected");
